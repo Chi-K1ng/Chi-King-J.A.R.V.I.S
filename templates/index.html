@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>J.A.R.V.I.S. // LIVE</title>
+  <link rel="stylesheet" href="/static/css/style.css" />
+</head>
+<body>
+
+  <div class="scanlines"></div>
+
+  <!-- ── Header ───────────────────────────────────────────────────────── -->
+  <header class="hud-header">
+    <div class="hud-label">SYSTEM // ONLINE</div>
+    <div class="hud-title">J·A·R·V·I·S</div>
+    <div class="hud-label" id="hud-time">--:--:--</div>
+  </header>
+
+  <!-- ── Main layout ──────────────────────────────────────────────────── -->
+  <main class="hud-main">
+
+    <!-- Left telemetry -->
+    <aside class="telemetry left-panel">
+      <div class="telem-block">
+        <div class="telem-label">AUDIO INPUT</div>
+        <canvas id="mic-meter" width="172" height="38"></canvas>
+        <div class="telem-value" id="mic-db">— dB</div>
+      </div>
+      <div class="telem-block">
+        <div class="telem-label">VOICE RECOGNITION</div>
+        <div class="telem-bar-wrap">
+          <div class="telem-bar" id="vr-bar" style="width:0%"></div>
+        </div>
+        <div class="telem-value" id="vr-pct">0%</div>
+      </div>
+      <div class="telem-block">
+        <div class="telem-label">NEURAL LATENCY</div>
+        <div class="telem-value mono" id="latency-val">--- ms</div>
+      </div>
+      <div class="telem-block">
+        <div class="telem-label">SESSION UPTIME</div>
+        <div class="telem-value mono" id="uptime-val">00:00:00</div>
+      </div>
+      <div class="telem-block">
+        <div class="telem-label">AUDIO OUTPUT</div>
+        <canvas id="spk-meter" width="172" height="38"></canvas>
+        <div class="telem-value" id="spk-db">— dB</div>
+      </div>
+    </aside>
+
+    <!-- Central core -->
+    <section class="core-wrap">
+      <canvas id="core-canvas"></canvas>
+      <div class="core-status" id="status-text">STANDBY</div>
+    </section>
+
+    <!-- Right: compact telemetry + chat -->
+    <aside class="right-col">
+
+      <div class="telemetry right-telem">
+        <div class="telem-block">
+          <div class="telem-label">PACKET BUFFER</div>
+          <div class="telem-bar-wrap">
+            <div class="telem-bar" id="buf-bar" style="width:0%"></div>
+          </div>
+          <div class="telem-value" id="buf-pct">0 / 200</div>
+        </div>
+        <div class="telem-block">
+          <div class="telem-label">GEMINI MODEL</div>
+          <div class="telem-value mono">2.5-FLASH-NATIVE</div>
+        </div>
+        <div class="telem-block">
+          <div class="telem-label">ACTIVE VOICE</div>
+          <div class="telem-value mono" id="active-voice-label">PUCK</div>
+        </div>
+        <div class="telem-block">
+          <div class="telem-label">INTERRUPTS</div>
+          <div class="telem-value mono" id="barge-count">0</div>
+        </div>
+      </div>
+
+      <!-- Chat transcript -->
+      <div class="chat-panel">
+        <div class="chat-header">CONVERSATION LOG</div>
+        <div class="chat-messages" id="chat-messages">
+          <div class="chat-empty">— awaiting connection —</div>
+        </div>
+      </div>
+
+    </aside>
+
+  </main>
+
+  <!-- ── Voice selector bar ─────────────────────────────────────────── -->
+  <div class="voice-bar">
+    <span class="voice-bar-label">VOICE //</span>
+    <select id="voice-select" class="voice-select">
+      <optgroup label="── FEATURED ──">
+        <option value="Puck">Puck — Upbeat &amp; Energetic</option>
+        <option value="Charon">Charon — Deep &amp; Analytical</option>
+        <option value="Fenrir">Fenrir — Intense &amp; Excitable</option>
+        <option value="Aoede">Aoede — Breezy &amp; Easy-Going</option>
+        <option value="Kore">Kore — Firm &amp; Precise</option>
+        <option value="Orus">Orus — Deep &amp; Firm</option>
+      </optgroup>
+      <optgroup label="── MALE ──">
+        <option value="Achird">Achird — Friendly &amp; Positive</option>
+        <option value="Achernar">Achernar — Soft &amp; Precise</option>
+        <option value="Algenib">Algenib — Gravelly &amp; Bright</option>
+        <option value="Algieba">Algieba — Smooth &amp; Composed</option>
+        <option value="Enceladus">Enceladus — Breathy &amp; Soft</option>
+        <option value="Gacrux">Gacrux — Mature &amp; Deep</option>
+        <option value="Iapetus">Iapetus — Clear &amp; Positive</option>
+        <option value="Rasalgethi">Rasalgethi — Informative &amp; Firm</option>
+        <option value="Sadaltager">Sadaltager — Knowledgeable</option>
+        <option value="Schedar">Schedar — Even &amp; Smooth</option>
+        <option value="Umbriel">Umbriel — Easy &amp; Calm</option>
+        <option value="Zubenelgenubi">Zubenelgenubi — Casual &amp; Friendly</option>
+      </optgroup>
+      <optgroup label="── FEMALE ──">
+        <option value="Autonoe">Autonoe — Bright &amp; Lively</option>
+        <option value="Callirrhoe">Callirrhoe — Easy &amp; Warm</option>
+        <option value="Despina">Despina — Smooth &amp; Flowing</option>
+        <option value="Erinome">Erinome — Clear &amp; Precise</option>
+        <option value="Laomedeia">Laomedeia — Upbeat &amp; Cheerful</option>
+        <option value="Leda">Leda — Youthful &amp; Bright</option>
+        <option value="Pulcherrima">Pulcherrima — Upbeat &amp; Warm</option>
+        <option value="Sadachbia">Sadachbia — Lively &amp; Expressive</option>
+        <option value="Sheratan">Sheratan — Easy &amp; Spirited</option>
+        <option value="Sterope">Sterope — Informative &amp; Clear</option>
+        <option value="Sulafat">Sulafat — Warm &amp; Engaging</option>
+        <option value="Vindemiatrix">Vindemiatrix — Gentle &amp; Measured</option>
+        <option value="Zephyr">Zephyr — Light &amp; Airy</option>
+      </optgroup>
+    </select>
+    <span class="voice-bar-active">
+      <span class="voice-bar-dot"></span>
+      ACTIVE: <span id="voice-bar-name">PUCK</span>
+    </span>
+  </div>
+
+  <!-- ── Footer ───────────────────────────────────────────────────────── -->
+  <footer class="hud-footer">
+    <div class="footer-left">
+      <div class="dot" id="conn-dot"></div>
+      <span id="conn-label">DISCONNECTED</span>
+    </div>
+
+    <div class="footer-center">
+      <button id="btn-connect"    class="ctrl-btn primary">INITIALIZE</button>
+      <button id="btn-disconnect" class="ctrl-btn danger" disabled>TERMINATE</button>
+    </div>
+
+    <div class="footer-right">
+      <span class="hud-label">VOICE:&nbsp;</span>
+      <span class="telem-value mono" id="active-voice-label">PUCK</span>
+    </div>
+  </footer>
+
+  <script src="/static/js/app.js"></script>
+</body>
+</html>

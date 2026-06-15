@@ -1,0 +1,9 @@
+flask
+flask-sock
+google-genai>=2.8
+python-dotenv
+psutil
+wmi
+requests
+pycaw
+python-telegram-bot>=22.0
