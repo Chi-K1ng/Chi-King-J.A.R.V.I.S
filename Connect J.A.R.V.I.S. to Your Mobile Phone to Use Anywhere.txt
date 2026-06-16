@@ -1,0 +1,77 @@
+# Connect J.A.R.V.I.S. to Your Mobile Phone to Use Anywhere
+
+This guide outlines how to connect your mobile device to your local J.A.R.V.I.S. server using a secure, free network mesh, and how to bypass mobile browser security restrictions so your microphone and voice features function properly over a local connection.
+
+================================================================================
+PART 1: CONNECT YOUR PHONE USING TAILSCALE (FREE VPN)
+================================================================================
+
+1. Install Tailscale on your PC:
+   - Download and install Tailscale for Windows from https://tailscale.com/download
+   - Launch it and log in (you can use your Google or GitHub account).
+
+2. Install Tailscale on your Phone:
+   - Download "Tailscale" from the Apple App Store or Google Play Store.
+   - Open the app and log in using the exact same account you used on your PC.
+   - Toggle the VPN switch to "Connected".
+
+3. Find your PC's Magic IP Address:
+   - Open the Tailscale app on your phone.
+   - Look for your PC in the device list and copy the IP address (it will look like 100.x.x.x).
+   - Your final URL to access Jarvis will look like this: http://YOUR_TAILSCALE_IP:PORT 
+     (Example: http://100.123.45.67:3000)
+
+
+================================================================================
+PART 2: UNLOCK BROWSER SECURITY FOR AUDIO & MIC ACCESS
+================================================================================
+
+--------------------------------------------------------------------------------
+METHOD A: FOR ANDROID (GOOGLE CHROME)
+--------------------------------------------------------------------------------
+1. Open Google Chrome on your Android phone.
+2. In the URL address bar, type exactly this and hit enter:
+   chrome://flags
+
+3. In the search box at the top of the page, type:
+   unsafely-treat-insecure-origin-as-secure
+
+4. Change the setting from "Disabled" to "Enabled".
+5. In the text box right below it, paste your full Tailscale URL with the port:
+   http://YOUR_TAILSCALE_IP:PORT
+
+6. Tap the "Relaunch" button at the bottom of the screen to restart Chrome.
+
+--------------------------------------------------------------------------------
+METHOD B: FOR IPHONE (SAFARI)
+--------------------------------------------------------------------------------
+1. Open the "Settings" app on your iPhone.
+2. Scroll down and tap on "Safari".
+3. Scroll all the way to the bottom and tap on "Advanced".
+4. Make sure the toggle for "Web Inspector" is turned ON.
+5. Make sure "Local Network Access" is allowed for Safari if prompted.
+
+--------------------------------------------------------------------------------
+METHOD C: FOR IPHONE (GOOGLE CHROME)
+--------------------------------------------------------------------------------
+1. Open Google Chrome on your iPhone.
+2. In the URL address bar, type exactly this and hit enter:
+   chrome://flags
+
+3. In the search box, type:
+   unsafely-treat-insecure-origin-as-secure
+
+4. Change the setting to "Enabled".
+5. Paste your full Tailscale URL with the port into the text box:
+   http://YOUR_TAILSCALE_IP:PORT
+
+6. Relaunch the Chrome app.
+
+
+================================================================================
+PART 3: ACCESSING J.A.R.V.I.S.
+================================================================================
+
+1. Make sure Tailscale is connected/turned ON on both your PC and your phone.
+2. Make sure your local Jarvis application server is running on your PC.
+3. Open your mobile browser, type in your full URL link (e.g., http://100.x.x.x:3000), and hit enter! Everything will load with full mic and audio privileges unlocked.
